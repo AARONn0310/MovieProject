@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemberPage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+</head>
+
+<body>
+    <nav id="head" class="navbar navbar-expand-md bg-body-tertiary"
+        style="padding: 0; height: 10vh; background-color: #333;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./moviePage.html" style="color: #fff; font-size: 24px;">MovieProject</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar1">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                            style="font-size: 20px; color: #fff;">會員</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="openLoginForm()" style="font-size: 18px;">登入</a>
+                            <a class="dropdown-item" href="" style="font-size: 18px;">註冊</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <!-- ... 其他代碼 ... -->
+                    <button class="nav-link active" id="v-pills-home-tab" data-toggle="pill" data-target="#v-pills-home"
+                        type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">會員資料</button>
+
+                    <button class="nav-link" id="v-pills-orders-tab" data-toggle="pill" data-target="#v-pills-orders"
+                        type="button" role="tab" aria-controls="v-pills-orders" aria-selected="false">購票紀錄</button>
+
+                    <button class="nav-link" id="v-pills-profile-tab" data-toggle="pill" data-target="#v-pills-profile"
+                        type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">點數加值</button>
+
+                    <button class="nav-link" id="v-pills-moviekind-tab" data-toggle="pill" data-target="#v-pills-moviekind"
+                        type="button" role="tab" aria-controls="v-pills-moviekind" aria-selected="false">查詢電影類別</button>
+                    <!-- ... 其他代碼 ... -->
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                        <h2>會員資料</h2>
+                        <hr>
+                        <div class="container" id="memberData">
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">會員姓名:</h5><input id="namefield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">會員帳號:</h5><input id="accountfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">會員電話:</h5><input id="phonefield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">電子信箱:</h5><input id="emailfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">會員性別:</h5><input id="genderfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">會員等級:</h5><input id="levelfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <!-- <div class="row mb-2">
+                                <h5 class="col-md-2">會員角色:</h5><input type="text" class="form-control col-md-6">
+                            </div> -->
+                        </div>
+                        <!-- 修改按鈕放這 -->
+                        <button id="updateUserInform" class="btn btn-primary mr-2">修改資料</button>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+                        <h2>購票紀錄</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="px-2">訂單編號</th>
+                                    <th class="px-2">電影名稱</th>
+                                    <th class="px-2">放映時間</th>
+                                    <th class="px-2">電影類型</th>
+                                    <th class="px-2">票價</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderTableBody">
+                                <!-- 這裡將通過JavaScript動態添加訂單數據 -->
+                                <!--前端:同一頁的getOrder()
+                                 後端:GetOrdersController的唯一一個方法:loginForm-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
+                        <h2>點數加值</h2>
+                        <!-- 這裡放置修改資料的表單 -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary btn-point mr-2">-1000</button>
+                                <button class="btn btn-primary btn-point mr-2">+100</button>
+                                <button class="btn btn-primary btn-point mr-2">+500</button>
+                                <button class="btn btn-primary btn-point mr-2">+1000</button>
+                                <button class="btn btn-primary btn-point">+5000</button>
+                            </div>
+
+                        </div>
+                        <div class="mt-3">
+                            <h4>加值點數：<span id="pointsDisplay">0</span></h4>
+                            <button id="confirmPoint">確認儲值</button>
+                        </div>
+                        <div id="pointMessage" class="alert alert-success mt-3" style="display: none;">
+                            儲值成功!
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-moviekind" role="tabpanel"
+                        aria-labelledby="v-pills-moviekind-tab">
+                        <h2>電影種類查詢</h2>
+                        <!-- 這裡放置修改資料的表單 -->
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="px-2">電影名稱</th>
+                                    <th class="px-2">主演名單</th>
+                                    <th class="px-2">導演</th>
+                                    <th class="px-2">放映時間</th>
+                                    <th class="px-2">電影類型</th>
+                                </tr>
+                            </thead>
+                            <tbody id="movieTableBody">
+                                <!-- 這裡將通過JavaScript動態添加訂單數據 -->
+                            </tbody>
+                        </table>
+                        <h2 class="bold-text">欲查詢之電影類型:</h2>
+                        <select id="moviekindSelect" name="moviekindSelect">
+                            <option value="">[請選擇]</option>
+                            <option value="犯罪">犯罪</option>
+                            <option value="劇情">劇情</option>
+                            <option value="動作">動作</option>
+                            <option value="音樂">音樂</option>
+                            <option value="紀錄片">紀錄片</option>
+                            <option value="動畫">動畫</option>
+                            <option value="冒險">冒險</option>
+                            <option value="奇幻">奇幻</option>
+                            <option value="科幻">科幻</option>
+                            <option value="驚悚">驚悚</option>
+                            <option value="恐怖">恐怖</option>
+                            <option value="神秘">神秘</option>
+                        </select>
+                        <input type="text" id="customMoviekind" name="customMoviekind" placeholder="請輸入欲查詢之電影類型">
+
+                        <button id="movieKindConfirm">確認</button><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 綁定「確認」按鈕的點擊事件
+        $("#movieKindConfirm").on("click", function () {
+            console.log("查詢電影類別");  // 檢查是否觸發事件
+            const selectedKind = $("#moviekindSelect").val();
+            const customKind = $("#customMoviekind").val().trim();
+            const movieKinds = [];
+
+            // 收集選擇和輸入的種類
+            if (selectedKind) movieKinds.push(selectedKind);
+            if (customKind) movieKinds.push(customKind);
+
+            if (movieKinds.length === 0) {
+                alert("請選擇或輸入電影類型");
+                return;
+            }
+
+            // 將種類組合為 Query String
+            const queryString = movieKinds.map(kind => `kind=${encodeURIComponent(kind)}`).join("&");
+
+            $.ajax({
+                url: `http://localhost:8080/movieproject_back-end-new/api/crud/kind?${queryString}`,
+                method: "GET",
+                dataType: "json",
+                success: function (movies) {
+                    displayMovies(movies); // 顯示電影資料的函數
+                },
+                error: function (xhr, status, error) {
+                    console.error("查詢失敗:", error);
+                    alert("查詢失敗，請稍後再試");
+                }
+            });
+        });
+
+
+        // 顯示電影資料的函數
+        function displayMovies(movies) {
+            const movieTableBody = $("#movieTableBody");
+            movieTableBody.empty();
+
+            if (movies.length === 0) {
+                movieTableBody.append("<tr><td colspan='5'>無符合條件的電影</td></tr>");
+                return;
+            }
+
+            movies.forEach(movie => {
+                const row = $("<tr>");
+                // row.append($("<td>").text(movie.movieId));
+                row.append($("<td>").text(movie.movieName));
+                row.append($("<td>").text(movie.moviecast));
+                row.append($("<td>").text(movie.moviedirector));
+                row.append($("<td>").text(movie.runtime));
+                row.append($("<td>").text(movie.movieType));
+
+                    movieTableBody.append(row);
+            });
+        }
+
+
+        $("#updateUserInform").on("click", function (evt) {
+            evt.preventDefault();
+            const userInform = JSON.parse(window.sessionStorage.getItem("userInform"));
+            console.log("抓資料:" + userInform);
+            const memberno = userInform.memberno;
+            //抓欄位資料
+            const userUpdate = {
+                name: $("#namefield").val() || null,
+                username: $("#accountfield").val() || null,
+                phone: $("#phonefield").val() || null,
+                email: $("#emailfield").val() || null,
+                gender: $("#genderfield").val() || null,
+                membershipLevel: $("#levelfield").val() || null,
+            }
+
+            $.ajax({
+                method: 'PUT',
+                url: "http://localhost:8080/movieproject_back-end-new/api/login/" + memberno,
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                data: JSON.stringify(userUpdate),
+                success: function (updata) {
+                    alert("會員資料更新成功!");
+                    window.sessionStorage.setItem("userInform", JSON.stringify(updata));
+                    // const data = JSON.parse(JSON.stringify(updata));
+                    $("#namefield").val(updata.name);
+                    $("#accountfield").val(updata.username);
+                    $("#phonefield").val(updata.phone);
+                    $("#emailfield").val(updata.email);
+                    $("#genderfield").val(updata.gender);
+                    $("#levelfield").val(updata.membershipLevel);
+                },
+                error: function (error) {
+                    alert("更新失敗");
+                }
+            });
+        });
+
+        //動態更新會員資料
+        function getMemberData() {
+            const userInform = JSON.parse(window.sessionStorage.getItem("userInform"));
+            console.log("抓資料:" + userInform);
+            const memberInputs = $("#memberData input");
+
+            memberInputs.eq(0).val(userInform.name);
+            memberInputs.eq(1).val(userInform.username);
+            memberInputs.eq(2).val(userInform.phone);
+            memberInputs.eq(3).val(userInform.email);
+            memberInputs.eq(4).val(userInform.gender);
+            memberInputs.eq(5).val(userInform.membershipLevel);
+            memberInputs.eq(6).val(userInform.role);
+        }
+
+        function getOrder() {
+            // const userName = window.localStorage.getItem("userName");
+            // const userName = prompt("請輸入會員帳號");
+            // const userName = window.sessionStorage.getItem("userInform");
+            const userInform = window.sessionStorage.getItem("userInform");
+            const userName = JSON.parse(userInform).username;
+            console.log("userName:", userName);
+            console.log("http://localhost:8080/movieproject_back-end-new/api/orders/" + userName);
+            //抓訂單
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/api/orders/" + userName,
+                method: "GET",
+                dataType: "json",
+                success: function (OrderData) {
+                    console.log(OrderData);
+                    // 将订单数据添加到表格中
+                    const orderTableBody = $("#orderTableBody");
+                    orderTableBody.empty();
+                    OrderData.forEach(order => {
+                        const row = $("<tr>");
+                        row.append($("<td>").text(order.orderId));
+                        row.append($("<td>").text(order.movieName));
+                        row.append($("<td>").text(order.movieTime));
+                        row.append($("<td>").text(order.movieType));
+                        row.append($("<td>").text(order.moviePrice));
+
+                        orderTableBody.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("獲取訂單數據失敗:", error);
+                    alert("獲取訂單數據失敗，請稍後再試");
+                }
+            });
+        }
+        /*
+        const data = JSON.stringfy(JSONDATA);
+        const test = window.sessionStorage.setItem("test",JSON.stringify(data));
+        const getTest = window.sessionStorage.getItem("test");
+        const getTestJsonData = JSON.parse(getTest);
+        var username = getTestJsonData.username;*/
+        function generateCheckMacValue(params) {
+            // 綠界提供的密鑰 (測試用)
+            const HashKey = '5294y06JbISpM5x9';
+            const HashIV = 'v77hoKGq4kWxNNIS';
+
+            // 將參數依字母順序排序
+            const sortedKeys = Object.keys(params).sort();
+            let rawString = '';
+
+            // 拼接排序後的參數和值
+            sortedKeys.forEach(key => {
+                rawString += `${key}=${params[key]}&`;
+            });
+
+            // 加上 HashKey 和 HashIV
+            rawString = `HashKey=${HashKey}&${rawString}HashIV=${HashIV}`;
+
+            // 進行 URL 編碼並轉為小寫
+            let encodedString = encodeURIComponent(rawString)
+                .toLowerCase()
+                .replace(/%20/g, '+') // 綠界要求空白替換為 '+'
+                .replace(/\'/g, '%27')
+                .replace(/\(/g, '%28')
+                .replace(/\)/g, '%29')
+                .replace(/\*/g, '%2A');
+
+            // 使用 MD5 或 SHA256 進行加密
+            const hash = CryptoJS.MD5(encodedString).toString().toUpperCase();
+
+            return hash;
+        }
+
+        function redirectToECPay() {
+            const currentPoints = parseInt($("#pointsDisplay").text()) || 1;
+
+            const form = $('<form>', {
+                action: 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
+                method: 'POST',
+                target: '_blank' // 在新分頁開啟
+            });
+
+            const params = {
+                MerchantID: '2000132',
+                MerchantTradeNo: 'TEST' + new Date().getTime(),
+                MerchantTradeDate: formatDate(new Date()),
+                PaymentType: 'aio',
+                TotalAmount: currentPoints,
+                TradeDesc: 'Test Order',
+                ItemName: 'Test Product 1',
+                ReturnURL: 'https://yourwebsite.com/return',
+                ChoosePayment: 'ALL'
+            };
+
+            // 生成 CheckMacValue
+            params.CheckMacValue = generateCheckMacValue(params);
+
+            // 將參數加入表單
+            $.each(params, function (key, value) {
+                form.append($('<input>', { type: 'hidden', name: key, value: value }));
+            });
+
+            $('body').append(form);
+            form.submit(); // 提交表單跳轉
+        }
+
+        // 格式化日期為 'yyyy/MM/dd HH:mm:ss'
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始，需要 +1
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+        }
+        function initPointButtons() {
+            // 點數按鈕事件
+            $(".btn-point").click(function () {
+                const pointsChange = parseInt($(this).text().replace('+', '').replace('-', '')) *
+                    ($(this).text().includes('-') ? -1 : 1);
+                updatePoints(pointsChange);
+            });
+
+            // 確認儲值按鈕事件
+            $("#confirmPoint").click(function () {
+                $(this).prop("disabled", true);  // 避免重複點擊
+
+                // 取得會員編號和點數
+                const userInform = JSON.parse(window.sessionStorage.getItem("userInform"));
+                const memberno = userInform.memberno;  // 取得會員編號
+                const amount = parseInt($("#pointsDisplay").text()) || 0;  // 取得目前顯示的點數
+
+                // 驗證點數是否有效
+                if (amount <= 0) {
+                    $(this).prop("disabled", false);  // 重新啟用按鈕
+                    return;
+                }
+
+                // AJAX 呼叫後端 API
+                $.ajax({
+                    url: `http://localhost:8080/movieproject_back-end-new/api/login/add/${memberno}?amount=${amount}`,  // API 路徑
+                    method: "PUT",  // 使用 PUT 方法
+                    success: function (response) {
+                        // 顯示後端返回的訊息
+                        $("#pointMessage")
+                            .fadeIn()
+                            .text(response)  // 使用後端傳回的訊息
+                            .delay(2000)
+                            .fadeOut(function () {
+                                redirectToECPay();
+                                $("#pointsDisplay").text(0);  // 重置點數
+                                toggleConfirmButton(0);  // 禁用按鈕
+
+                                $("#confirmPoint").prop("disabled", false);  // 啟用按鈕
+                            });
+                    },
+                    error: function () {
+                        alert("加值失敗，請稍後再試！");
+                        $("#confirmPoint").prop("disabled", false);  // 出錯時重新啟用按鈕
+                    }
+                });
+            });
+
+            // 初始化按鈕狀態
+            toggleConfirmButton(parseInt($("#pointsDisplay").text()) || 0);
+        }
+
+        // 點數更新函數
+        function updatePoints(points) {
+            const pointsDisplay = $("#pointsDisplay");
+            const currentPoints = parseInt(pointsDisplay.text()) || 0;
+            const newPoints = currentPoints + points;
+            pointsDisplay.text(newPoints >= 0 ? newPoints : 0);  // 確保點數不為負值
+            toggleConfirmButton(newPoints);
+        }
+
+        // 按鈕啟用/禁用控制
+        function toggleConfirmButton(points) {
+            if (points > 0) {
+                $("#confirmPoint").prop("disabled", false);  // 啟用按鈕
+            } else {
+                $("#confirmPoint").prop("disabled", true);  // 禁用按鈕
+            }
+        }
+
+        // 頁面載入時執行
+        function start() {
+            getMemberData();
+            getOrder();
+            initPointButtons();
+            displayMovies(movies);
+
+        }
+
+        $(document).ready(start);
+
+    </script>
+
+</html>
