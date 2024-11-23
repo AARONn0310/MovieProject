@@ -1,9 +1,4 @@
 # MovieProject
- 
-
-Please read the MovieProject.pdf, there will be detailed instructions in it.<br>
-
-Thank you for your watching!<br>
 
 聲明 (中文)<br>
 本專案為電影售票網站的練習範例，其內容靈感來自某影城網站，<br>
